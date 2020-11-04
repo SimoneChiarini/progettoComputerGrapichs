@@ -6,13 +6,16 @@
     <link href="./ressources/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="libs.js"></script>
     <script type="text/javascript" src="script.js"></script>
-  </head>
-  <a href="index1.html" class="btn btn-primary my-2">Shadow Mapping</a>
-  <a href="index.html" class="btn btn-primary my-2">Shadow Mapping con PCF</a>
-  <a href="index6.html" class="btn btn-primary my-2">Shadow Mapping con PCF - Smooth</a>
-  <a href="index9.html" class="btn btn-primary my-2">Shadow Mapping con PCF - Strong Smooth</a>
-  <body style='margin:0px' onload='main()'>
+  </head><body style='margin:0px; background-color: black;' onload='main()' ><center>
+  <div  style="text-align:center; " ><table align="center"><tr ><td>
+  <a href="index1.html" class="btn btn-primary my-2">Shadow Mapping</a></td>
+  <td><a href="index.html" class="btn btn-primary my-2">Shadow Mapping con PCF</a></td>
+  <td><p class=" btn btn-secondary my-2">Inserire un valore da 1 a 9 per variare la % relativa alla regolarità dell'ombra--></p>
+  <input  id='input'></td>
+</tr>
+</table></div>
     <canvas id='your_canvas'
-      style='height: 80%; width: 90%; background-color: black;'></canvas>
+      style='height: 70%; width: 80%; background-color: black;'></canvas>
+    </table></center>
   </body>
 </html>

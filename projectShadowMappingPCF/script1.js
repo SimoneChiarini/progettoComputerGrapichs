@@ -187,7 +187,7 @@ var main=function() {
     var _sampler = GL.getUniformLocation(SHADER_PROGRAM, "sampler");
     var _samplerShadowMap = GL.getUniformLocation(SHADER_PROGRAM,
                                                   "samplerShadowMap");
-  
+    
     var _uv = GL.getAttribLocation(SHADER_PROGRAM, "uv");
     var _position = GL.getAttribLocation(SHADER_PROGRAM, "position");
     var _normal = GL.getAttribLocation(SHADER_PROGRAM, "normal");

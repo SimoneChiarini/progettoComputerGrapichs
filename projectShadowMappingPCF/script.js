@@ -3,7 +3,7 @@ var main=function() {
   var CANVAS=document.getElementById("your_canvas");
   CANVAS.width=window.innerWidth;
   CANVAS.height=window.innerHeight;
-
+  var inp=document.getElementById("input");
   /*========================= CAPTURE MOUSE EVENTS ========================= */
 
   var AMORTIZATION=0.95;
@@ -39,11 +39,36 @@ var main=function() {
       case 37: LIGHTDIR[0] -= 0.05;LIGHTMATRIX=LIBS.lookAtDir(LIGHTDIR, [0,1,0], [0,0,0]); break;  // The left arrow key was pressed
       case 38: LIGHTDIR[2] += 0.05;LIGHTMATRIX=LIBS.lookAtDir(LIGHTDIR, [0,1,0], [0,0,0]);  break;  // The up arrow key was pressed
       case 40: LIGHTDIR[2] -= 0.05;LIGHTMATRIX=LIBS.lookAtDir(LIGHTDIR, [0,1,0], [0,0,0]);  break;  // The down arrow key was pressed
+      
       default: return; // Prevent the unnecessary drawing
     }
 }
+var keyDown_I=function(e) {
+     
+  switch(e.keyCode){
+    case 49: GL.uniform1f(_PCF,0.1); break;
+    case 97: GL.uniform1f(_PCF,0.1); break;
+    case 50: GL.uniform1f(_PCF,0.2); break;
+    case 98: GL.uniform1f(_PCF,0.2); break;
+    case 51: GL.uniform1f(_PCF,0.3); break;
+    case 99: GL.uniform1f(_PCF,0.3); break;
+    case 52: GL.uniform1f(_PCF,0.4); break;
+    case 100: GL.uniform1f(_PCF,0.4); break;
+    case 53: GL.uniform1f(_PCF,0.5); break;
+    case 101: GL.uniform1f(_PCF,0.5); break;
+    case 54: GL.uniform1f(_PCF,0.6); break;
+    case 102: GL.uniform1f(_PCF,0.6); break;
+    case 55: GL.uniform1f(_PCF,0.7); break;
+    case 103: GL.uniform1f(_PCF,0.7); break;
+    case 56: GL.uniform1f(_PCF,0.8); break;
+    case 104: GL.uniform1f(_PCF,0.8); break;
+    case 57: GL.uniform1f(_PCF,0.9); break;
+    case 105: GL.uniform1f(_PCF,0.9); break;
+    default: return; // Prevent the unnecessary drawing
+  }
+}
 
-
+  inp.addEventListener("keydown",keyDown_I,false);
   document.addEventListener("keydown", keyDown, false);
   CANVAS.addEventListener("mousedown", mouseDown, false);
   CANVAS.addEventListener("mouseup", mouseUp, false);
@@ -111,6 +136,7 @@ vUV=uv;\n\
 precision mediump float;\n\
 uniform sampler2D sampler, samplerShadowMap;\n\
 uniform vec3 source_direction;\n\
+uniform float PCF; \n\
 varying vec2 vUV;\n\
 varying vec3 vNormal, vLightPos;\n\
 const vec3 source_ambient_color=vec3(1.,1.,1.);\n\
@@ -136,7 +162,7 @@ sum+=texture2D(samplerShadowMap, uv_shadowMap+duv).r;\n\
 sum/=16.;\n\
 \n\
 \n\
-float shadowCoeff=1.-smoothstep(0.001, 0.04, vLightPos.z-sum);\n\
+float shadowCoeff=1.-smoothstep(0.001, PCF, vLightPos.z-sum);\n\
 vec3 color=vec3(texture2D(sampler, vUV));\n\
 vec3 I_ambient=source_ambient_color*mat_ambient_color;\n\
 vec3 I_diffuse=source_diffuse_color*mat_diffuse_color*max(0., dot(vNormal, source_direction));\n\
@@ -197,8 +223,11 @@ gl_FragColor = vec4(I*color, 1.);\n\
   var _uv = GL.getAttribLocation(SHADER_PROGRAM, "uv");
   var _position = GL.getAttribLocation(SHADER_PROGRAM, "position");
   var _normal = GL.getAttribLocation(SHADER_PROGRAM, "normal");
+  var _PCF = GL.getUniformLocation(SHADER_PROGRAM, "PCF")                                              
+   
 
   GL.useProgram(SHADER_PROGRAM);
+  GL.uniform1f(_PCF, 0.3);
   GL.uniform1i(_sampler, 0);
   GL.uniform1i(_samplerShadowMap, 1);
   var LIGHTDIR=[0.58,0.58,-0.58];
